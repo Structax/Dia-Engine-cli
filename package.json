@@ -1,0 +1,33 @@
+{
+  "type": "module",
+  "name": "@dia/engine",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "dia-engine": "dist/bin/dia-engine.js"
+  },
+  "files": [
+    "src/",
+    "shared/",
+    "tests/",
+    "bin/",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "dev": "node dist/src/server.js",
+    "test": "uvu -r tsx __tests__"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "zod": "^3.24.3"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.4",
+    "typescript": "^5.8.3",
+    "uvu": "^0.5.6"
+  }
+}
