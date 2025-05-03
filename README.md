@@ -30,7 +30,10 @@ npm run build
 ### 4. Execute your intent
 
 ```bash
-npx dia-engine run --intent=task.mark_done --input='{"id": "123"}'
+npx tsx bin/dia-engine.ts run \
+  --intent=task.mark_done \
+  --input="{\"id\":\"123\"}" \
+  --token=eyJpZCI6InUxIiwicm9sZXMiOlsidXNlciJdLCJ0ZW5hbnRJZCI6InQxIn0=
 ```
 
 ---
@@ -116,7 +119,7 @@ This downloads the full working template from GitHub.
 
 ## 🤝 License
 
-MIT — created by [@nishikawatakeshiki](https://github.com/nishikawatakeshiki)
+MIT — created by [@Structax](https://github.com/Structax)
 
 Build safely. Run with intent.
 

@@ -1,11 +1,24 @@
 import { AuthPredicate } from "../shared/types"
+// Removed import as registerAuthRule is defined locally
+let authRules: Record<string, Function> = {}
 
-export const authRules: Record<string, AuthPredicate> = {}
+// Register the rule using the locally defined registerAuthRule function
+registerAuthRule("user:authenticated", (user: { id: string; name: string } | null) => {
+  return !!user
+})
 
-export function registerAuthRule(id: string, rule: AuthPredicate) {
-  authRules[id] = rule
+export function registerAuthRule(name: string, fn: Function) {
+  authRules[name] = fn
 }
+
+export function getAuthRules() {
+  return authRules
+}
+
 
 export function clearAuthRules() {
   Object.keys(authRules).forEach((k) => delete authRules[k])
 }
+registerAuthRule("user:authenticated", (user: { id: string; name: string } | null): boolean => {
+  return !!user
+})

@@ -13,14 +13,15 @@
       "skipLibCheck": true,
       "baseUrl": ".",
       "paths": {
-        "@shared/*": ["shared/*"]
+        "@shared/*": ["./src/shared/*"]
       },
+      
       "rootDir": "./",
-      "outDir": "dist",
+      "outDir": "./dist",
       "declaration": true,
       "declarationMap": true,
       "allowImportingTsExtensions": false
     },
-    "include": ["src", "shared/emit.ts"],
+    "include": ["src", "shared", "bin", "__tests__"],
     "exclude": ["node_modules", "dist"]
   }

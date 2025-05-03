@@ -5,7 +5,7 @@ import { registerAuthRule } from "../src/authRegistry"
 import { markDone } from '../src/intents/markDone'
 import { runIntentTest, mockContext } from '../src/testUtils'
 
-registerAuthRule("user:authenticated", (user) => !!user)
+registerAuthRule("user:authenticated", (user: { id: string; roles: string[]; tenantId: string } | null) => !!user)
 
 const ctx = mockContext({
   user: { id: 'u1', roles: ['user'], tenantId: 't1' }

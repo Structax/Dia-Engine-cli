@@ -1,5 +1,5 @@
 import { IncomingMessage } from "http"
-import DiaContext from "../shared/types"
+import { DiaContext } from "../shared/types"
 import { createHash, randomUUID } from "crypto"
 
 export async function createContext(req: IncomingMessage): Promise<DiaContext> {

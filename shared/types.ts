@@ -32,21 +32,29 @@ export interface DiaUser {
   tenantId: string
 }
 
-export default interface DiaContext {
+export interface DiaContext {
   user: DiaUser | null
   session: { expiresAt: Date } | null
   signal: AbortSignal
   traceId: string
   services: Record<string, any>
 }
-
+export interface AuthPredicate<Input = any> {
+  (user: DiaUser | null, input: Input): boolean
+}
 export interface DiaIntent<Input, Output> {
   id: string
   input: ZodType<Input>
   require?: AuthCondition<Input>
   effect: (ctx: DiaContext, input: Input) => EffectResult<Output>
 }
-export type AuthPredicate<Input = any> = (
-  user: DiaUser | null,
-  input: Input
-) => boolean
+
+export const __exports = {
+  DiaIntent: null as unknown as DiaIntent<any, any>,
+  DiaContext: null as unknown as DiaContext,
+  DomainEvent: null as unknown as DomainEvent<any>
+}
+// shared/types.ts の末尾に追加
+export const DiaIntent = null as unknown as DiaIntent<any, any>
+export const DiaContext = null as unknown as DiaContext
+export const DomainEvent = null as unknown as DomainEvent<any>

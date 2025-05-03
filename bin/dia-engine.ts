@@ -3,21 +3,23 @@
 import { execSync } from "child_process"
 import * as fs from "fs"
 import * as path from "path"
+import minimist from "minimist"
+const args = minimist(process.argv.slice(2))
 
 // -------------------- CLI Entry --------------------
-const args = parseArgs(process.argv.slice(2))
+console.log(process.argv.slice(2)) 
+console.log("args:", args)
+console.log("args._[0]:", args._[0])
 
 if (args._[0] === "init" && args._[1]) {
   const targetDir = args._[1]
-  const repo = "nishikawatakeshiki/dia-template"
+  const repo = "Structax/Dia-Engine-cli"
 
   console.log(`📦 Downloading DiaEngine template to '${targetDir}'...`)
   execSync(`npx degit ${repo} ${targetDir}`, { stdio: "inherit" })
   console.log(`\n🎉 DiaEngine project created at ${targetDir}`)
   process.exit(0)
-}
-
-if (args._[0] === "run") {
+} else if (args._[0] === "run") {
   (async () => {
     const intentId = args.intent
     const inputRaw = args.input
@@ -29,12 +31,17 @@ if (args._[0] === "run") {
 
     try {
       const input = JSON.parse(typeof inputRaw === "string" ? inputRaw : inputRaw.join(""))
-      const { getIntentById } = require(path.resolve("./src/intentMap"))
-      const { createContext } = require(path.resolve("./src/context"))
-      const { runIntent } = require(path.resolve("./src/runIntent"))
-
+      const { getIntentById } = await import(path.resolve("./src/intentMap.js"))
+      const { createContext } = await import(path.resolve("./src/context.js"))
+      const { runIntent } = await import(path.resolve("./src/runIntent.js"))
       const intent = getIntentById(intentId)
-      const ctx = await createContext({ headers: {} } as any)
+      const mockReq = {
+        headers: {
+          authorization: `Bearer ${args.token || ""}`
+        }
+      } as any
+      
+      const ctx = await createContext(mockReq)
       const { result, emits } = await runIntent(intent, ctx, input)
 
       console.log("\n✅ Intent executed successfully")
@@ -46,22 +53,9 @@ if (args._[0] === "run") {
       process.exit(1)
     }
   })()
-}
-
-console.log("❌ Unknown command. Usage:")
-console.log("  npx dia-engine init my-app")
-console.log("  npx dia-engine run --intent=... --input='{}'")
-process.exit(1)
-
-function parseArgs(argv: string[]) {
-  const out: { [key: string]: string | string[] } & { _: string[] } = { _: [] }
-  argv.forEach(arg => {
-    if (arg.startsWith("--")) {
-      const [k, v] = arg.replace(/^--/, "").split("=")
-      out[k] = v
-    } else {
-      out._.push(arg)
-    }
-  })
-  return out
+} else {
+  console.log("❌ Unknown command. Usage:")
+  console.log("  npx dia-engine init my-app")
+  console.log("  npx dia-engine run --intent=... --input='{}'")
+  process.exit(1)
 }

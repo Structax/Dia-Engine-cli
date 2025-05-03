@@ -1,4 +1,4 @@
-import DiaContext from "../shared/types"
+import { DiaContext } from "../shared/types"
 
 export async function runEffect<T>(
   label: string,

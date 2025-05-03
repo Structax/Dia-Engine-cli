@@ -1,6 +1,6 @@
 {
   "type": "module",
-  "name": "@dia/engine",
+  "name": "dia-engine",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "bin": {
@@ -14,18 +14,21 @@
     "README.md"
   ],
   "scripts": {
-    "build": "tsc -p tsconfig.json",
+    "build": "tsc",
     "dev": "node dist/src/server.js",
     "test": "uvu -r tsx __tests__"
   },
   "keywords": [],
-  "author": "",
+  "author": "Yuki Nishikawa",
+  "version": "1.0.0",
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "minimist": "^1.2.8",
     "zod": "^3.24.3"
   },
   "devDependencies": {
+    "@types/minimist": "^1.2.5",
     "tsx": "^4.19.4",
     "typescript": "^5.8.3",
     "uvu": "^0.5.6"

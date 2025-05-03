@@ -1,7 +1,7 @@
 // ✅ ファイル: src/testUtils.ts
 
-import DiaContext, { DiaIntent, DomainEvent } from "../shared/types"
-import { runIntent } from "./runIntent"
+import { DiaContext, DomainEvent } from "../shared/types"
+import { DiaIntent, runIntent } from "./runIntent"
 
 export function mockContext(overrides: Partial<DiaContext> = {}): DiaContext {
   return {

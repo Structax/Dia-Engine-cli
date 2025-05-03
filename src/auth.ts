@@ -1,15 +1,18 @@
 import { AuthCondition } from "../shared/types"
-import { authRules } from "./authRegistry.js" // 次で作る
+import { getAuthRules } from "./authRegistry"
 
 export function evaluateAuthCondition<Input>(
   condition: AuthCondition<Input>,
   user: any,
   input: Input
 ): boolean {
+  const rules = getAuthRules()
   if (typeof condition === "string") {
-    const rule = authRules[condition]
-    if (!rule) throw new Error(`Unknown auth rule: ${condition}`)
-    return rule(user, input)
+    
+    if (!rules) throw new Error(`Unknown auth rule: ${condition}`)
+    const rule = rules[condition];
+    if (!rule) throw new Error(`Unknown auth rule: ${condition}`);
+    return rule(user, input);
   }
 
   if (typeof condition === "function") {
@@ -17,7 +20,8 @@ export function evaluateAuthCondition<Input>(
   }
 
   if (condition.when) {
-    const rule = authRules[condition.when]
+    const rules = getAuthRules();
+    const rule = rules[condition.when];
     if (!rule) throw new Error(`Unknown auth rule: ${condition.when}`)
     return rule(user, input)
   }
